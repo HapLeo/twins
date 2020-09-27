@@ -28,9 +28,9 @@ public class ListenerController {
     /**
      * 取消监听节点操作
      */
-    @RequestMapping("/nodeListenerClose")
-    public String nodeListenerClose(@RequestParam String path) {
-        listenerService.nodeListenerClose(path);
+    @RequestMapping("/nodeListenerRemove")
+    public String nodeListenerRemove(@RequestParam String path) {
+        listenerService.nodeListenerRemove(path);
         return "SUCCESS";
     }
 }

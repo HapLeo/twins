@@ -16,5 +16,5 @@ public interface IListenerService {
      * 取消节点监听
      * @param path
      */
-    void nodeListenerClose(String path);
+    void nodeListenerRemove(String path);
 }

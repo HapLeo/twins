@@ -7,65 +7,72 @@
 </head>
 <body>
 <div>
-    <textarea id="result" style="width: 800px;color: red" rows="6"></textarea>
+    <h3>数据区</h3>
+    <textarea id="result" style="width: 100%;color: red" rows="6"></textarea>
 </div>
-<div>
-    <h3>查询子节点列表</h3>
-    <form id="children">
-        <input type="text" id="path" value="/">
-        <input type="button" id="submit" value="提交">
-    </form>
-    <h3>新增子节点</h3>
-    <form id="create">
-        节点类型：<input type="text" id="createMode" value="PERSISTENT">
-        新增节点：<input type="text" id="path" value="/">
-        新增节点值：<input type="text" id="data" value="/">
-        <input type="button" id="submit" value="提交">
-    </form>
-    <h3>修改节点</h3>
-    <form id="setData">
-        节点：<input type="text" id="path" value="/">
-        节点值：<input type="text" id="data" value="/">
-        <input type="button" id="submit" value="提交">
-    </form>
-    <h3>删除节点</h3>
-    <form id="delete">
-        节点：<input type="text" id="path" value="/">
-        <input type="button" id="submit" value="提交">
-    </form>
-    <h3>获取节点</h3>
-    <form id="getData">
-        节点：<input type="text" id="path" value="/">
-        <input type="button" id="submit" value="提交">
-    </form>
+<div style="float:left;width: 50%" class="left">
+    <div>
+        <h3>查询子节点列表</h3>
+        <form id="children">
+            <input type="text" id="path" value="/">
+            <input type="button" id="submit" value="提交">
+        </form>
+        <h3>新增子节点</h3>
+        <form id="create">
+            节点类型：<input type="text" id="createMode" value="PERSISTENT">
+            新增节点：<input type="text" id="path" value="/">
+            新增节点值：<input type="text" id="data" value="/">
+            <input type="button" id="submit" value="提交">
+        </form>
+        <h3>修改节点</h3>
+        <form id="setData">
+            节点：<input type="text" id="path" value="/">
+            节点值：<input type="text" id="data" value="/">
+            <input type="button" id="submit" value="提交">
+        </form>
+        <h3>删除节点</h3>
+        <form id="delete">
+            节点：<input type="text" id="path" value="/">
+            <input type="button" id="submit" value="提交">
+        </form>
+        <h3>获取节点</h3>
+        <form id="getData">
+            节点：<input type="text" id="path" value="/">
+            <input type="button" id="submit" value="提交">
+        </form>
 
-    <h3>Watcher监听</h3>
-    <h4>checkExists</h4>
-    <form id="checkExists">
-        节点：<input type="text" id="path" value="/">
-        <input type="button" id="submit" value="提交">
-    </form>
-    <h4>getDataWatch</h4>
-    <form id="getDataWatch">
-        节点：<input type="text" id="path" value="/">
-        <input type="button" id="submit" value="提交">
-    </form>
-    <h4>getChildrenWatch</h4>
-    <form id="getChildrenWatch">
-        节点：<input type="text" id="path" value="/">
-        <input type="button" id="submit" value="提交">
-    </form>
-    <h3>Listener监听</h3>
-    <h4>nodeListenerStart</h4>
-    <form id="nodeListenerStart">
-        节点：<input type="text" id="path" value="/">
-        <input type="button" id="submit" value="提交">
-    </form>
-    <h4>nodeListenerClose</h4>
-    <form id="nodeListenerClose">
-        节点：<input type="text" id="path" value="/">
-        <input type="button" id="submit" value="提交">
-    </form>
+        <h3>Watcher监听</h3>
+        <h4>checkExists</h4>
+        <form id="checkExists">
+            节点：<input type="text" id="path" value="/">
+            <input type="button" id="submit" value="提交">
+        </form>
+        <h4>getDataWatch</h4>
+        <form id="getDataWatch">
+            节点：<input type="text" id="path" value="/">
+            <input type="button" id="submit" value="提交">
+        </form>
+        <h4>getChildrenWatch</h4>
+        <form id="getChildrenWatch">
+            节点：<input type="text" id="path" value="/">
+            <input type="button" id="submit" value="提交">
+        </form>
+    </div>
+</div>
+<div style="float:right;width: 50%" class="right">
+    <div>
+        <h3>Listener监听</h3>
+        <h4>nodeListenerStart</h4>
+        <form id="nodeListenerStart">
+            节点：<input type="text" id="path" value="/">
+            <input type="button" id="submit" value="提交">
+        </form>
+        <h4>nodeListenerRemove</h4>
+        <form id="nodeListenerRemove">
+            节点：<input type="text" id="path" value="/">
+            <input type="button" id="submit" value="提交">
+        </form>
+    </div>
 </div>
 </body>
 <!-- 开发环境版本，包含了有帮助的命令行警告 -->
@@ -190,12 +197,12 @@
             }
         })
     });
-    $('#nodeListenerClose #submit').click(function () {
+    $('#nodeListenerRemove #submit').click(function () {
 
         $.ajax({
-            url:'/listener/nodeListenerClose',
+            url:'/listener/nodeListenerRemove',
             data:{
-                path: $('#nodeListenerClose #path').val(),
+                path: $('#nodeListenerRemove #path').val(),
             },
             success:function (result) {
                 $('#result').html(JSON.stringify(result));
