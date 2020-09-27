@@ -18,13 +18,45 @@ public class NodeServiceImpl implements INodeService {
 
 
     @Override
-    public void create(String path) {
+    public void create(CreateMode createMode, String path) {
         try {
-            client.create().withMode(CreateMode.PERSISTENT).forPath(path);
+            client.create().withMode(createMode).forPath(path);
         } catch (Exception e) {
             log.error(e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void delete(String path) {
+        try {
+            client.delete().forPath(path);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void setData(String path, String value) {
+        if (value == null) {
+            return;
+        }
+        try {
+            client.setData().forPath(path, value.getBytes());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public String getData(String path) {
+        try {
+            byte[] bytes = client.getData().forPath(path);
+            return new String(bytes);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override

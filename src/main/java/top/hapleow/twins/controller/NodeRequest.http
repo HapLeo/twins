@@ -1,0 +1,28 @@
+
+### 获取指定节点下的子节点数据
+GET http://localhost:9999/node/getChildren?path=/twins
+Accept: application/json
+
+### 新增节点
+GET http://localhost:9999/node/create?createMode=PERSISTENT&path=/twins/create
+Accept: application/json
+
+### 删除节点
+POST http://localhost:9999/node/delete
+Content-Type: application/x-www-form-urlencoded
+
+path=/twins/create
+
+### 修改节点
+POST http://localhost:9999/node/setData
+Content-Type: application/x-www-form-urlencoded
+
+path=/twins&value=leftADright
+
+### 获取节点的值
+GET http://localhost:9999/node/getData?path=/twins
+Accept: application/json
+
+###
+
+
