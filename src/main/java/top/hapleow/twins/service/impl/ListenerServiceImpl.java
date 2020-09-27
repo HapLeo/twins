@@ -19,17 +19,34 @@ public class ListenerServiceImpl implements IListenerService {
     @Autowired
     private CuratorFramework client;
 
-    @Override
-    public void curatorCacheListener(String path) {
+    private volatile CuratorCache curatorCache;
 
-        CuratorCache cache = CuratorCache.build(client, path);
-        CuratorCacheListener curatorCacheListener = CuratorCacheListener.builder().forNodeCache(new NodeCacheListener() {
-            @Override
-            public void nodeChanged() throws Exception {
-                System.out.println("节点修改");
+    @Override
+    public void nodeListenerStart(String path) {
+        if (curatorCache == null){
+            synchronized (this){
+                if (curatorCache == null){
+                    curatorCache = CuratorCache.builder(client, path).build();
+                    CuratorCacheListener listener = CuratorCacheListener.builder().forNodeCache(new NodeCacheListener() {
+                        @Override
+                        public void nodeChanged() throws Exception {
+                            System.out.println("nodeListener 监听到节点 " + path + "已变化。");
+                        }
+                    }).build();
+                    curatorCache.listenable().addListener(listener);
+                    curatorCache.start();
+                }
             }
-        }).build();
-        cache.listenable().addListener(curatorCacheListener);
-        cache.start();
+        }
+
+    }
+
+    @Override
+    public void nodeListenerClose(String path) {
+        if (curatorCache == null){
+            return;
+        }
+        curatorCache.close();
+        curatorCache = null;
     }
 }

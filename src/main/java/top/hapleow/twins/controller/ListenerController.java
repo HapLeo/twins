@@ -17,12 +17,20 @@ public class ListenerController {
     private IListenerService listenerService;
 
     /**
-     * 监听节点操作
+     * 启动监听节点操作
      */
-    @RequestMapping("/curatorCacheListener")
-    public String curatorCacheListener(@RequestParam String path) {
-        listenerService.curatorCacheListener(path);
+    @RequestMapping("/nodeListenerStart")
+    public String nodeListenerStart(@RequestParam String path) {
+        listenerService.nodeListenerStart(path);
         return "SUCCESS";
     }
 
+    /**
+     * 取消监听节点操作
+     */
+    @RequestMapping("/nodeListenerClose")
+    public String nodeListenerClose(@RequestParam String path) {
+        listenerService.nodeListenerClose(path);
+        return "SUCCESS";
+    }
 }

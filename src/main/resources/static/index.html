@@ -6,13 +6,14 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 </head>
 <body>
-
+<div>
+    <textarea id="result" style="width: 800px;color: red" rows="6"></textarea>
+</div>
 <div>
     <h3>查询子节点列表</h3>
     <form id="children">
         <input type="text" id="path" value="/">
         <input type="button" id="submit" value="提交">
-        <textarea style="width: 800px" rows="6" id="result"></textarea>
     </form>
     <h3>新增子节点</h3>
     <form id="create">
@@ -51,6 +52,17 @@
     </form>
     <h4>getChildrenWatch</h4>
     <form id="getChildrenWatch">
+        节点：<input type="text" id="path" value="/">
+        <input type="button" id="submit" value="提交">
+    </form>
+    <h3>Listener监听</h3>
+    <h4>nodeListenerStart</h4>
+    <form id="nodeListenerStart">
+        节点：<input type="text" id="path" value="/">
+        <input type="button" id="submit" value="提交">
+    </form>
+    <h4>nodeListenerClose</h4>
+    <form id="nodeListenerClose">
         节点：<input type="text" id="path" value="/">
         <input type="button" id="submit" value="提交">
     </form>
@@ -160,6 +172,30 @@
             url:'/watcher/getChildrenWatch',
             data:{
                 path: $('#getChildrenWatch #path').val(),
+            },
+            success:function (result) {
+                $('#result').html(JSON.stringify(result));
+            }
+        })
+    });
+    $('#nodeListenerStart #submit').click(function () {
+
+        $.ajax({
+            url:'/listener/nodeListenerStart',
+            data:{
+                path: $('#nodeListenerStart #path').val(),
+            },
+            success:function (result) {
+                $('#result').html(JSON.stringify(result));
+            }
+        })
+    });
+    $('#nodeListenerClose #submit').click(function () {
+
+        $.ajax({
+            url:'/listener/nodeListenerClose',
+            data:{
+                path: $('#nodeListenerClose #path').val(),
             },
             success:function (result) {
                 $('#result').html(JSON.stringify(result));

@@ -6,9 +6,15 @@ package top.hapleow.twins.service;
 public interface IListenerService {
 
     /**
-     * 监听节点变化
+     * 持续监听节点信息
      *
      * @param path
      */
-    void curatorCacheListener(String path);
+    void nodeListenerStart(String path);
+
+    /**
+     * 取消节点监听
+     * @param path
+     */
+    void nodeListenerClose(String path);
 }
