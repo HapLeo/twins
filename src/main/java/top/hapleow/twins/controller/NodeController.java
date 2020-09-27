@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import top.hapleow.twins.service.INodeService;
 
+/**
+ * 操作节点的API
+ */
 @RestController
 @RequestMapping("/node")
 public class NodeController {
@@ -30,6 +33,7 @@ public class NodeController {
 
     /**
      * 删除节点
+     *
      * @param path
      * @return
      */
@@ -41,17 +45,19 @@ public class NodeController {
 
     /**
      * 修改节点
+     *
      * @param path
      * @return
      */
     @RequestMapping("/setData")
-    public Object setData(@RequestParam(value = "path") String path,@RequestParam(value = "value") String value) {
-        nodeService.setData(path,value);
+    public Object setData(@RequestParam(value = "path") String path, @RequestParam(value = "value") String value) {
+        nodeService.setData(path, value);
         return "SUCCESS";
     }
 
     /**
      * 获取节点的值
+     *
      * @param path
      * @return
      */
@@ -64,6 +70,7 @@ public class NodeController {
 
     /**
      * 获取制定节点的子节点列表
+     *
      * @param path
      * @return
      */

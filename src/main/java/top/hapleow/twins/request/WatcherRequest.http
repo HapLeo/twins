@@ -1,0 +1,14 @@
+
+### 监听一个节点是否被新增、修改、删除
+GET http://localhost:9999/watcher/checkExists?path=/twins
+Accept: application/json
+
+### 监听一个节点是否被修改
+GET http://localhost:9999/watcher/getDataWatch?path=/twins
+Accept: application/json
+
+### 监听一个节点的子节点是否被新增、修改、删除
+GET http://localhost:9999/watcher/getChildrenWatch?path=/twins
+Accept: application/json
+
+###
