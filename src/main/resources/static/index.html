@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>twins - useful zookeeper client</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+</head>
+<body>
+
+<div>
+    <h3>查询子节点列表</h3>
+    <form id="children">
+        <input type="text" id="path" value="/">
+        <input type="button" id="submit" value="提交">
+        <textarea style="width: 800px" rows="6" id="result"></textarea>
+    </form>
+    <h3>新增子节点</h3>
+    <form id="create">
+        节点类型：<input type="text" id="createMode" value="PERSISTENT">
+        新增节点：<input type="text" id="path" value="/">
+        新增节点值：<input type="text" id="data" value="/">
+        <input type="button" id="submit" value="提交">
+    </form>
+    <h3>修改节点</h3>
+    <form id="setData">
+        节点：<input type="text" id="path" value="/">
+        节点值：<input type="text" id="data" value="/">
+        <input type="button" id="submit" value="提交">
+    </form>
+    <h3>删除节点</h3>
+    <form id="delete">
+        节点：<input type="text" id="path" value="/">
+        <input type="button" id="submit" value="提交">
+    </form>
+    <h3>获取节点</h3>
+    <form id="getData">
+        节点：<input type="text" id="path" value="/">
+        <input type="button" id="submit" value="提交">
+    </form>
+
+    <h3>Watcher监听</h3>
+    <h4>checkExists</h4>
+    <form id="checkExists">
+        节点：<input type="text" id="path" value="/">
+        <input type="button" id="submit" value="提交">
+    </form>
+    <h4>getDataWatch</h4>
+    <form id="getDataWatch">
+        节点：<input type="text" id="path" value="/">
+        <input type="button" id="submit" value="提交">
+    </form>
+    <h4>getChildrenWatch</h4>
+    <form id="getChildrenWatch">
+        节点：<input type="text" id="path" value="/">
+        <input type="button" id="submit" value="提交">
+    </form>
+</div>
+</body>
+<!-- 开发环境版本，包含了有帮助的命令行警告 -->
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script>
+    $('#children #submit').click(function () {
+
+        $.ajax({
+            url:'/node/getChildren',
+            data:{
+                path: $('#children #path').val(),
+            },
+            success:function (result) {
+                $('#result').html(JSON.stringify(result));
+            }
+        })
+    });
+
+    $('#create #submit').click(function () {
+
+        $.ajax({
+            url:'/node/create',
+            data:{
+                createMode: $('#create #createMode').val(),
+                path: $('#create #path').val(),
+                data: $('#create #data').val(),
+            },
+            success:function (result) {
+                $('#result').html(JSON.stringify(result));
+            }
+        })
+    });
+
+    $('#setData #submit').click(function () {
+
+        $.ajax({
+            url:'/node/setData',
+            data:{
+                path: $('#setData #path').val(),
+                data: $('#setData #data').val(),
+            },
+            success:function (result) {
+                $('#result').html(JSON.stringify(result));
+            }
+        })
+    });
+
+    $('#delete #submit').click(function () {
+
+        $.ajax({
+            url:'/node/delete',
+            data:{
+                path: $('#delete #path').val(),
+                data: $('#delete #data').val(),
+            },
+            success:function (result) {
+                $('#result').html(JSON.stringify(result));
+            }
+        })
+    });
+
+    $('#getData #submit').click(function () {
+
+        $.ajax({
+            url:'/node/getData',
+            data:{
+                path: $('#getData #path').val(),
+                data: $('#getData #data').val(),
+            },
+            success:function (result) {
+                $('#result').html(JSON.stringify(result));
+            }
+        })
+    });
+
+    $('#checkExists #submit').click(function () {
+
+        $.ajax({
+            url:'/watcher/checkExists',
+            data:{
+                path: $('#checkExists #path').val(),
+            },
+            success:function (result) {
+                $('#result').html(JSON.stringify(result));
+            }
+        })
+    });
+
+    $('#getDataWatch #submit').click(function () {
+
+        $.ajax({
+            url:'/watcher/getDataWatch',
+            data:{
+                path: $('#getDataWatch #path').val(),
+            },
+            success:function (result) {
+                $('#result').html(JSON.stringify(result));
+            }
+        })
+    });
+    $('#getChildrenWatch #submit').click(function () {
+
+        $.ajax({
+            url:'/watcher/getChildrenWatch',
+            data:{
+                path: $('#getChildrenWatch #path').val(),
+            },
+            success:function (result) {
+                $('#result').html(JSON.stringify(result));
+            }
+        })
+    });
+</script>
+
+</html>

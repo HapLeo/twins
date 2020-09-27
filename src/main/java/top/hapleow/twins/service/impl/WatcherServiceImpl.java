@@ -21,7 +21,7 @@ public class WatcherServiceImpl implements IWatcherService {
     public void checkExists(String path) {
         try {
             client.checkExists().usingWatcher((CuratorWatcher) watchedEvent ->
-                    System.out.println(watchedEvent.getPath() + watchedEvent.getState() + watchedEvent.getType()))
+                    System.out.println("checkExists=>Path:"+ watchedEvent.getPath() +",state:"+ watchedEvent.getState() + ",type:"+watchedEvent.getType()))
                     .forPath(path);
         } catch (Exception e) {
             e.printStackTrace();
@@ -32,7 +32,7 @@ public class WatcherServiceImpl implements IWatcherService {
     public void getDataWatch(String path) {
         try {
             client.getData().usingWatcher((CuratorWatcher) watchedEvent ->
-                    System.out.println(watchedEvent.getPath() + watchedEvent.getState() + watchedEvent.getType()))
+                    System.out.println("getDataWatch=>Path:"+ watchedEvent.getPath() +",state:"+ watchedEvent.getState() + ",type:"+watchedEvent.getType()))
                     .forPath(path);
         } catch (Exception e) {
             e.printStackTrace();
@@ -43,7 +43,7 @@ public class WatcherServiceImpl implements IWatcherService {
     public void getChildrenWatch(String path) {
         try {
             client.getChildren().usingWatcher((CuratorWatcher) watchedEvent ->
-                    System.out.println(watchedEvent.getPath() + watchedEvent.getState() + watchedEvent.getType()))
+                    System.out.println("getChildrenWatch=>Path:"+ watchedEvent.getPath() +",state:"+ watchedEvent.getState() + ",type:"+watchedEvent.getType()))
                     .forPath(path);
         } catch (Exception e) {
             e.printStackTrace();

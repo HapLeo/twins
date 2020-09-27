@@ -9,11 +9,11 @@ public interface INodeService {
 
     /**
      * 创建节点
-     *
-     * @param createMode
+     *  @param createMode
      * @param path
+     * @param data
      */
-    void create(CreateMode createMode, String path);
+    void create(CreateMode createMode, String path, String data);
 
     /**
      * 获取指定节点的子节点列表
@@ -34,9 +34,9 @@ public interface INodeService {
      * 修改节点（赋值）
      *
      * @param path
-     * @param value
+     * @param data
      */
-    void setData(String path, String value);
+    void setData(String path, String data);
 
     /**
      * 获取节点的值

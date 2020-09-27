@@ -26,7 +26,7 @@ public class WatcherController {
     }
 
     /**
-     * 监听一个节点是否被修改
+     * 监听一个节点是否被修改、删除
      */
     @RequestMapping("/getDataWatch")
     public String getDataWatch(@RequestParam String path){
@@ -35,7 +35,7 @@ public class WatcherController {
     }
 
     /**
-     * 监听一个节点的子节点是否被新增、修改、删除
+     * 监听一个节点的子节点是否被新增、删除
      */
     @RequestMapping("/getChildrenWatch")
     public String getChildrenWatch(@RequestParam String path){

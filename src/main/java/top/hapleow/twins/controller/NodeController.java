@@ -26,8 +26,10 @@ public class NodeController {
      * @return
      */
     @RequestMapping("/create")
-    public Object create(@RequestParam(value = "createMode") CreateMode createMode, @RequestParam(value = "path") String path) {
-        nodeService.create(createMode, path);
+    public Object create(@RequestParam(value = "createMode") CreateMode createMode,
+                         @RequestParam(value = "path") String path,
+                         @RequestParam(value = "data") String data) {
+        nodeService.create(createMode, path, data);
         return "SUCCESS";
     }
 
@@ -50,8 +52,8 @@ public class NodeController {
      * @return
      */
     @RequestMapping("/setData")
-    public Object setData(@RequestParam(value = "path") String path, @RequestParam(value = "value") String value) {
-        nodeService.setData(path, value);
+    public Object setData(@RequestParam(value = "path") String path, @RequestParam(value = "data") String data) {
+        nodeService.setData(path, data);
         return "SUCCESS";
     }
 

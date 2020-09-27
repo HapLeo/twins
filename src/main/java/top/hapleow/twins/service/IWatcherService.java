@@ -12,7 +12,7 @@ public interface IWatcherService {
     void checkExists(String path);
 
     /**
-     * 监听一个节点是否被修改
+     * 监听一个节点是否被修改、删除
      */
     void getDataWatch(String path);
 

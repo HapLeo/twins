@@ -21,9 +21,9 @@ public class NodeServiceImpl implements INodeService {
 
 
     @Override
-    public void create(CreateMode createMode, String path) {
+    public void create(CreateMode createMode, String path, String data) {
         try {
-            client.create().withMode(createMode).forPath(path);
+            client.create().withMode(createMode).forPath(path,data.getBytes());
         } catch (Exception e) {
             log.error(e.getMessage());
             e.printStackTrace();
@@ -40,12 +40,12 @@ public class NodeServiceImpl implements INodeService {
     }
 
     @Override
-    public void setData(String path, String value) {
-        if (value == null) {
+    public void setData(String path, String data) {
+        if (data == null) {
             return;
         }
         try {
-            client.setData().forPath(path, value.getBytes());
+            client.setData().forPath(path, data.getBytes());
         } catch (Exception e) {
             e.printStackTrace();
         }
