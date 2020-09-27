@@ -1,0 +1,6 @@
+
+### 监听一个节点是否被新增、修改、删除
+GET http://localhost:9999/listener/curatorCacheListener?path=/twins
+Accept: application/json
+
+###
