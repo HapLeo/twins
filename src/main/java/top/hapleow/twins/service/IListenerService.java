@@ -7,14 +7,15 @@ public interface IListenerService {
 
     /**
      * 持续监听节点信息
+     * NodeCacheListener会监听指定节点和该节点的所有子子孙孙节点的增删改操作
      *
      * @param path
      */
-    void nodeListenerStart(String path);
+    void listenerStart(String path);
 
     /**
      * 取消节点监听
      * @param path
      */
-    void nodeListenerRemove(String path);
+    void listenerRemove(String path);
 }

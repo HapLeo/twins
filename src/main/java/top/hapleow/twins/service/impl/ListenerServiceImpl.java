@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.hapleow.twins.service.IListenerService;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 操作节点的API
  */
@@ -19,40 +22,57 @@ public class ListenerServiceImpl implements IListenerService {
     @Autowired
     private CuratorFramework client;
 
-    private volatile CuratorCache curatorCache;
+    private volatile Map<String, CuratorCache> curatorCacheMap = new HashMap<>();
 
-    private volatile CuratorCacheListener nodeCacheListener;
+    private volatile Map<String, CuratorCacheListener> nodeCacheListenerMap = new HashMap<>();
 
-    @Override
-    public void nodeListenerStart(String path) {
+    private CuratorCache initCuratorCache(String path) {
+
+        CuratorCache curatorCache = curatorCacheMap.get(path);
         if (curatorCache == null) {
             synchronized (this) {
-                if (curatorCache == null) {
+                if (curatorCacheMap.get(path) == null) {
                     curatorCache = CuratorCache.builder(client, path).build();
-                    curatorCache.start();
+                    curatorCacheMap.put(path, curatorCache);
                 }
+                curatorCache = curatorCacheMap.get(path);
+                curatorCache.start();
             }
         }
-        if (nodeCacheListener == null){
-            synchronized (this){
-                if (nodeCacheListener == null) {
+        return curatorCache;
+    }
+
+    @Override
+    public void listenerStart(String path) {
+
+        CuratorCache curatorCache = initCuratorCache(path);
+
+        CuratorCacheListener nodeCacheListener = nodeCacheListenerMap.get(path);
+        if (nodeCacheListener == null) {
+            synchronized (this) {
+                if (nodeCacheListenerMap.get(path) == null) {
                     nodeCacheListener = CuratorCacheListener.builder().forNodeCache(new NodeCacheListener() {
                         @Override
                         public void nodeChanged() throws Exception {
                             System.out.println("nodeListener 监听到节点 " + path + "已变化。");
                         }
                     }).build();
+                    nodeCacheListenerMap.put(path, nodeCacheListener);
                 }
             }
         }
-        curatorCache.listenable().addListener(nodeCacheListener);
+        curatorCache.listenable().addListener(nodeCacheListenerMap.get(path));
     }
 
     @Override
-    public void nodeListenerRemove(String path) {
-        if (curatorCache == null || nodeCacheListener == null) {
+    public void listenerRemove(String path) {
+
+        CuratorCache nodeCuratorCache = curatorCacheMap.get(path);
+        CuratorCacheListener nodeCacheListener = nodeCacheListenerMap.get(path);
+
+        if (nodeCuratorCache == null || nodeCacheListener == null) {
             return;
         }
-        curatorCache.listenable().removeListener(nodeCacheListener);
+        nodeCuratorCache.listenable().removeListener(nodeCacheListener);
     }
 }

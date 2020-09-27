@@ -20,8 +20,8 @@ public class ListenerController {
      * 启动监听节点操作
      */
     @RequestMapping("/nodeListenerStart")
-    public String nodeListenerStart(@RequestParam String path) {
-        listenerService.nodeListenerStart(path);
+    public String listenerStart(@RequestParam String path) {
+        listenerService.listenerStart(path);
         return "SUCCESS";
     }
 
@@ -29,8 +29,8 @@ public class ListenerController {
      * 取消监听节点操作
      */
     @RequestMapping("/nodeListenerRemove")
-    public String nodeListenerRemove(@RequestParam String path) {
-        listenerService.nodeListenerRemove(path);
+    public String listenerRemove(@RequestParam String path) {
+        listenerService.listenerRemove(path);
         return "SUCCESS";
     }
 }
