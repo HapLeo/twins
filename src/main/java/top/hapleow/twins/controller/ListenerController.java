@@ -20,19 +20,19 @@ public class ListenerController {
     /**
      * 启动监听节点操作
      */
-    @RequestMapping("/nodeListenerStart")
-    public Result nodeListenerStart(@RequestParam String path) {
-        listenerService.nodeListenerStart(path);
-        return new Result("nodeListener开始监听" + path, null);
+    @RequestMapping("/cacheListenerStart")
+    public Result cacheListenerStart(@RequestParam String path) {
+        listenerService.cacheListenerStart(path);
+        return new Result("cacheListenerStart - > path=" + path, null);
     }
 
     /**
      * 启动监听路径操作
      */
-    @RequestMapping("/pathListenerStart")
-    public Result pathListenerStart(@RequestParam String path) {
-        listenerService.pathListenerStart(path);
-        return new Result("pathListener开始监听" + path, null);
+    @RequestMapping("/stateListenerStart")
+    public Result stateListenerStart() {
+        listenerService.stateListenerStart();
+        return new Result("stateListenerStart", null);
     }
 
     /**

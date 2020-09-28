@@ -11,16 +11,15 @@ public interface IListenerService {
      *
      * @param path
      */
-    void nodeListenerStart(String path);
+    void cacheListenerStart(String path);
 
 
     /**
-     * 路径监听启动
-     * PathListener只监听指定节点的子子孙孙节点，不监听自己
+     * 状态监听启动
      *
-     * @param path
      */
-    void pathListenerStart(String path);
+    void stateListenerStart();
+
 
     /**
      * 监听取消
@@ -28,5 +27,6 @@ public interface IListenerService {
      * @param path
      */
     void listenerRemove(String path, String type);
+
 
 }

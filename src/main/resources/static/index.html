@@ -62,14 +62,13 @@
 <div style="float:right;width: 50%" class="right">
     <div>
         <h3>Listener监听</h3>
-        <h4>nodeListenerStart</h4>
-        <form id="nodeListenerStart">
+        <h4>cacheListenerStart</h4>
+        <form id="cacheListenerStart">
             节点：<input type="text" id="path" value="/">
             <input type="button" id="submit" value="提交">
         </form>
-        <h4>pathListenerStart</h4>
-        <form id="pathListenerStart">
-            节点：<input type="text" id="path" value="/">
+        <h4>stateListenerStart</h4>
+        <form id="stateListenerStart">
             <input type="button" id="submit" value="提交">
         </form>
         <h4>listenerRemove</h4>
@@ -191,31 +190,29 @@
             }
         })
     });
-    $('#nodeListenerStart #submit').click(function () {
+    $('#cacheListenerStart #submit').click(function () {
 
         $.ajax({
-            url:'/listener/nodeListenerStart',
+            url:'/listener/cacheListenerStart',
             data:{
-                path: $('#nodeListenerStart #path').val(),
+                path: $('#cacheListenerStart #path').val(),
             },
             complete:function (result) {
                 $('#result').html(JSON.stringify(result.responseJSON));
             }
         })
     });
-    $('#pathListenerStart #submit').click(function () {
+    $('#stateListenerStart #submit').click(function () {
 
         $.ajax({
-            url:'/listener/pathListenerStart',
-            data:{
-                path: $('#pathListenerStart #path').val(),
-            },
+            url:'/listener/stateListenerStart',
             complete:function (result) {
                 console.log(result)
                 $('#result').html(JSON.stringify(result.responseJSON));
             }
         })
     });
+
     $('#listenerRemove #submit').click(function () {
 
         $.ajax({

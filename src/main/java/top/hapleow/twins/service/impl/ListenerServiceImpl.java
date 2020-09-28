@@ -2,7 +2,8 @@ package top.hapleow.twins.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.curator.framework.CuratorFramework;
-import org.apache.curator.framework.recipes.cache.*;
+import org.apache.curator.framework.recipes.cache.CuratorCache;
+import org.apache.curator.framework.recipes.cache.CuratorCacheListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.hapleow.twins.service.IListenerService;
@@ -42,57 +43,40 @@ public class ListenerServiceImpl implements IListenerService {
     }
 
     @Override
-    public void nodeListenerStart(String path) {
+    public void cacheListenerStart(String path) {
 
-        String key = path + "_node";
+        String key = path + "_cache";
 
         CuratorCache curatorCache = initCuratorCache(path);
-
         CuratorCacheListener cacheListener = cacheListenerMap.get(key);
         if (cacheListener == null) {
             synchronized (this) {
                 if (cacheListenerMap.get(key) == null) {
-                    cacheListener = CuratorCacheListener.builder().forNodeCache(new NodeCacheListener() {
-                        @Override
-                        public void nodeChanged() throws Exception {
-                            System.out.println("nodeCacheListener 监听到节点 " + path + "已变化。");
-                        }
-                    }).build();
+                    cacheListener = CuratorCacheListener.builder()
+                            .forCreates(node -> System.out.println(String.format("Node created: [%s]", node)))
+                            .forChanges((oldNode, node) -> System.out.println(String.format("Node changed. Old: [%s] New: [%s]", oldNode, node)))
+                            .forDeletes(oldNode -> System.out.println(String.format("Node deleted. Old value: [%s]", oldNode)))
+                            .forInitialized(() -> System.out.println("Cache initialized"))
+                            .build();
                     cacheListenerMap.put(key, cacheListener);
                 }
             }
         }
+        // register the listener
         curatorCache.listenable().addListener(cacheListenerMap.get(key));
-        System.out.println("Node监听已开启，监听path:" + path);
+        System.out.println("CacheListener -> path:" + path);
     }
 
 
     /**
-     * 路径监听启动
+     * 状态监听启动
      *
-     * @param path
      */
     @Override
-    public void pathListenerStart(String path) {
-        String key = path + "_path";
-        CuratorCache curatorCache = initCuratorCache(path);
-
-        CuratorCacheListener cacheListener = cacheListenerMap.get(key);
-        if (cacheListener == null) {
-            synchronized (this) {
-                if (cacheListenerMap.get(key) == null) {
-                    cacheListener = CuratorCacheListener.builder().forPathChildrenCache(path, client, new PathChildrenCacheListener() {
-                        @Override
-                        public void childEvent(CuratorFramework curatorFramework, PathChildrenCacheEvent pathChildrenCacheEvent) throws Exception {
-                            System.out.println("pathChildrenCacheListener 监听到节点" + path + "变化：类型=" + pathChildrenCacheEvent.getType() + "data=" + pathChildrenCacheEvent.getData());
-                        }
-                    }).build();
-                }
-                cacheListenerMap.put(key, cacheListener);
-            }
-        }
-        curatorCache.listenable().addListener(cacheListenerMap.get(key));
-        System.out.println("Path监听已开启，监听path:" + path);
+    public void stateListenerStart() {
+        client.getConnectionStateListenable().addListener((curatorFramework, connectionState)
+                -> System.out.println("stateListener 监听到状态变化：" + connectionState));
+        System.out.println("stateListener -> 监听器开启");
     }
 
     @Override
