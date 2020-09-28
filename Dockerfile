@@ -2,7 +2,7 @@
 # VERSION 0.0.1
 # Author: eangulee
 # 基础镜像使用java
-FROM java:11
+FROM scottyengineering/java11
 # 作者
 MAINTAINER wuyulin <hapleow@gmail.com>
 # VOLUME 指定了临时文件目录为/tmp。

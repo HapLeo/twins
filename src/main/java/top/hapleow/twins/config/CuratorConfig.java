@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class CuratorConfig {
 
-    private static String zkAddress = "localhost:2181,localhost:2181,localhost:2182";
+    private static String zkAddress = "localhost:2181";
 
     @Bean
     public CuratorFramework getClient() {
