@@ -5,6 +5,7 @@ import org.apache.curator.framework.CuratorFramework;
 import org.apache.zookeeper.CreateMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import top.hapleow.twins.exception.NoNodeException;
 import top.hapleow.twins.service.INodeService;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public class NodeServiceImpl implements INodeService {
     @Override
     public void create(CreateMode createMode, String path, String data) {
         try {
-            client.create().withMode(createMode).forPath(path,data.getBytes());
+            client.create().withMode(createMode).forPath(path, data.getBytes());
         } catch (Exception e) {
             log.error(e.getMessage());
             e.printStackTrace();
@@ -35,7 +36,7 @@ public class NodeServiceImpl implements INodeService {
         try {
             client.delete().forPath(path);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new NoNodeException("节点不存在!" + e.getMessage());
         }
     }
 
@@ -68,8 +69,7 @@ public class NodeServiceImpl implements INodeService {
         try {
             return client.getChildren().forPath(path);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new NoNodeException("节点不存在！" + path);
         }
-        return null;
     }
 }

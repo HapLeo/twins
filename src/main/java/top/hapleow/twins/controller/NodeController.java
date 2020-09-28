@@ -5,7 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import top.hapleow.twins.common.Result;
 import top.hapleow.twins.service.INodeService;
+
+import java.util.List;
 
 /**
  * 操作节点的API
@@ -30,7 +33,7 @@ public class NodeController {
                          @RequestParam(value = "path") String path,
                          @RequestParam(value = "data") String data) {
         nodeService.create(createMode, path, data);
-        return "SUCCESS";
+        return Result.SUCCESS(nodeService.getData(path));
     }
 
     /**
@@ -42,7 +45,7 @@ public class NodeController {
     @RequestMapping("/delete")
     public Object delete(@RequestParam(value = "path") String path) {
         nodeService.delete(path);
-        return "SUCCESS";
+        return Result.SUCCESS(path);
     }
 
     /**
@@ -52,9 +55,9 @@ public class NodeController {
      * @return
      */
     @RequestMapping("/setData")
-    public Object setData(@RequestParam(value = "path") String path, @RequestParam(value = "data") String data) {
+    public Result setData(@RequestParam(value = "path") String path, @RequestParam(value = "data") String data) {
         nodeService.setData(path, data);
-        return "SUCCESS";
+        return Result.SUCCESS(nodeService.getData(path));
     }
 
     /**
@@ -64,9 +67,9 @@ public class NodeController {
      * @return
      */
     @RequestMapping("/getData")
-    public Object getData(@RequestParam(value = "path") String path) {
+    public Result getData(@RequestParam(value = "path") String path) {
 
-        return nodeService.getData(path);
+        return new Result("执行成功！", nodeService.getData(path));
     }
 
 
@@ -77,8 +80,11 @@ public class NodeController {
      * @return
      */
     @RequestMapping("/getChildren")
-    public Object getChildren(@RequestParam String path) {
-        return nodeService.getChildren(path);
+    public Result getChildren(@RequestParam String path) {
+
+        List<String> children = nodeService.getChildren(path);
+        return new Result("执行成功！", children);
+
     }
 
 }

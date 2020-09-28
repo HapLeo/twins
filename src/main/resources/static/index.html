@@ -67,12 +67,19 @@
             节点：<input type="text" id="path" value="/">
             <input type="button" id="submit" value="提交">
         </form>
-        <h4>nodeListenerRemove</h4>
-        <form id="nodeListenerRemove">
+        <h4>pathListenerStart</h4>
+        <form id="pathListenerStart">
             节点：<input type="text" id="path" value="/">
             <input type="button" id="submit" value="提交">
         </form>
+        <h4>listenerRemove</h4>
+        <form id="listenerRemove">
+            节点：<input type="text" id="path" value="/">
+            监听类型：<input type="text" id="type" value="/">
+            <input type="button" id="submit" value="提交">
+        </form>
     </div>
+
 </div>
 </body>
 <!-- 开发环境版本，包含了有帮助的命令行警告 -->
@@ -85,8 +92,8 @@
             data:{
                 path: $('#children #path').val(),
             },
-            success:function (result) {
-                $('#result').html(JSON.stringify(result));
+            complete:function (result) {
+                $('#result').html(JSON.stringify(result.responseJSON));
             }
         })
     });
@@ -100,8 +107,8 @@
                 path: $('#create #path').val(),
                 data: $('#create #data').val(),
             },
-            success:function (result) {
-                $('#result').html(JSON.stringify(result));
+            complete:function (result) {
+                $('#result').html(JSON.stringify(result.responseJSON));
             }
         })
     });
@@ -114,8 +121,8 @@
                 path: $('#setData #path').val(),
                 data: $('#setData #data').val(),
             },
-            success:function (result) {
-                $('#result').html(JSON.stringify(result));
+            complete:function (result) {
+                $('#result').html(JSON.stringify(result.responseJSON));
             }
         })
     });
@@ -128,8 +135,8 @@
                 path: $('#delete #path').val(),
                 data: $('#delete #data').val(),
             },
-            success:function (result) {
-                $('#result').html(JSON.stringify(result));
+            complete:function (result) {
+                $('#result').html(JSON.stringify(result.responseJSON));
             }
         })
     });
@@ -140,10 +147,9 @@
             url:'/node/getData',
             data:{
                 path: $('#getData #path').val(),
-                data: $('#getData #data').val(),
             },
-            success:function (result) {
-                $('#result').html(JSON.stringify(result));
+            complete:function (result) {
+                $('#result').html(JSON.stringify(result.responseJSON));
             }
         })
     });
@@ -155,8 +161,8 @@
             data:{
                 path: $('#checkExists #path').val(),
             },
-            success:function (result) {
-                $('#result').html(JSON.stringify(result));
+            complete:function (result) {
+                $('#result').html(JSON.stringify(result.responseJSON));
             }
         })
     });
@@ -168,8 +174,8 @@
             data:{
                 path: $('#getDataWatch #path').val(),
             },
-            success:function (result) {
-                $('#result').html(JSON.stringify(result));
+            complete:function (result) {
+                $('#result').html(JSON.stringify(result.responseJSON));
             }
         })
     });
@@ -180,8 +186,8 @@
             data:{
                 path: $('#getChildrenWatch #path').val(),
             },
-            success:function (result) {
-                $('#result').html(JSON.stringify(result));
+            complete:function (result) {
+                $('#result').html(JSON.stringify(result.responseJSON));
             }
         })
     });
@@ -192,20 +198,34 @@
             data:{
                 path: $('#nodeListenerStart #path').val(),
             },
-            success:function (result) {
-                $('#result').html(JSON.stringify(result));
+            complete:function (result) {
+                $('#result').html(JSON.stringify(result.responseJSON));
             }
         })
     });
-    $('#nodeListenerRemove #submit').click(function () {
+    $('#pathListenerStart #submit').click(function () {
 
         $.ajax({
-            url:'/listener/nodeListenerRemove',
+            url:'/listener/pathListenerStart',
             data:{
-                path: $('#nodeListenerRemove #path').val(),
+                path: $('#pathListenerStart #path').val(),
             },
-            success:function (result) {
-                $('#result').html(JSON.stringify(result));
+            complete:function (result) {
+                console.log(result)
+                $('#result').html(JSON.stringify(result.responseJSON));
+            }
+        })
+    });
+    $('#listenerRemove #submit').click(function () {
+
+        $.ajax({
+            url:'/listener/listenerRemove',
+            data:{
+                path: $('#listenerRemove #path').val(),
+                type: $('#listenerRemove #type').val(),
+            },
+            complete:function (result) {
+                $('#result').html(JSON.stringify(result.responseJSON));
             }
         })
     });
